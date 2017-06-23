@@ -1,0 +1,29 @@
+{
+  "name": "boredquest",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helloworldBerlin/boredquest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/helloworldBerlin/boredquest/issues"
+  },
+  "homepage": "https://github.com/helloworldBerlin/boredquest#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "mongodb": "^2.2.29",
+    "monk": "^6.0.1",
+    "pug": "^2.0.0-rc.2",
+    "vue": "^2.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
