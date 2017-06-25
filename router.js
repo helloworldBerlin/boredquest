@@ -30,7 +30,7 @@ router.get('/something', function(req, res){
         }
         else {
             var keys = Object.keys(quests);
-            var result = quests[keys[ keys.length * Math.random() << 0]];
+            var result = quests[keys[keys.length * Math.random() << 0]];
             res.send(result.quest);
         }
     });
