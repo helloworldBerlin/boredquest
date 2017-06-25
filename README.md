@@ -7,5 +7,5 @@ name: db_01
 collection:
 
 quests=[{quest:'string',
-                     outdoor:bool},
+                     outdoor:bool,
                      sport:bool}]
