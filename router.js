@@ -3,7 +3,7 @@ var express = require('express'),
     path = require('path');
 
 router.get('/', function(req, res){
-    res.render('index', {hi: 'hi'});
+    res.render('index');
 });
 
 router.get('/quest', function(req, res){
@@ -22,7 +22,18 @@ router.get('/quest', function(req, res){
 });
 
 router.get('/something', function(req, res){
-  res.send("Random number:"+Math.random()*1000);
+    var db = req.db;
+    var collection = db.get('quests');
+    collection.find({}, function(err, quests){
+        if (err) {
+            res.send('much error');
+        }
+        else {
+            var keys = Object.keys(quests);
+            var result = quests[keys[ keys.length * Math.random() << 0]];
+            res.send(result.quest);
+        }
+    });
 });
 
 module.exports = router;
