@@ -19,6 +19,7 @@ app.use(function(req, res, next){
 
 app.use('/', router);
 app.use('/get', router);
+app.use('/something', router);
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');

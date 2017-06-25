@@ -21,5 +21,8 @@ router.get('/quest', function(req, res){
     })
 });
 
+router.get('/something', function(req, res){
+  res.send("Random number:"+Math.random()*1000);
+});
 
 module.exports = router;

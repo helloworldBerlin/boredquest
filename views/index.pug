@@ -2,4 +2,18 @@ html
   head
     title= hi
   body
-    h1 beep
+    h1 Bored?
+    button(onclick= "requestQuest()") Do something
+    p(id= "answer")
+
+  script.
+    function requestQuest(){
+      var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("answer").innerHTML = this.responseText;
+          }
+        };
+      xhttp.open("GET", "something", true);
+      xhttp.send();
+    };
