@@ -3,17 +3,27 @@ html
     title= hi
   body
     h1 Bored?
-    button(onclick= "requestQuest()") Do something
-    p(id= "answer")
+      p Outdoors?
+        input(type='checkbox' id='outdoor')
+      p Sports?
+        input(type='checkbox' id='sport')
+      button(onclick='requestQuest()') Get quest!
+      p(id= "answer")
 
   script.
     function requestQuest(){
       var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("answer").innerHTML = this.responseText;
-          }
-        };
-      xhttp.open("GET", "something", true);
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("answer").innerHTML = this.responseText;
+        }
+      };
+      var outdoor = document.getElementById('outdoor').checked;
+      var sport = document.getElementById('sport').checked;
+      if(outdoor) outdoor = 1
+      else outdoor = 0;
+      if(sport) sport = 1
+      else sport = 0;
+      xhttp.open("GET", "something?questForm="+outdoor+sport, true);
       xhttp.send();
     };
