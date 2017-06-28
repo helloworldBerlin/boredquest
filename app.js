@@ -18,8 +18,9 @@ app.use(function(req, res, next){
 })
 
 app.use('/', router);
-app.use('/get', router);
-app.use('/something', router);
+app.use('/quest', router);
+app.use('/getQuest', router);
+app.use('/submitQuest', router);
 
 app.listen(3000, function () {
   console.log('Bored app listening on port 3000!');
