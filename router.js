@@ -34,9 +34,9 @@ router.get('/getQuest', function(req, res){
         questForm[i] = parseInt(questForm[i], 16);
     }
     collection.find({'outdoor': questForm[0],
-                     'sport': questForm[1]},
+                     'sport': questForm[1],
                      'personenZahl': questForm[2],
-                     'spassFaktor': questForm[3],
+                     'spassFaktor': questForm[3]},
                      function(err, quests){
         if (err) {
             res.send('Keine Tätigkeit gefunden...');

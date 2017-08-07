@@ -1,0 +1,23 @@
+html
+    head
+        title Boredquest
+        
+    body
+        main.submitquest
+            h2 Submit your own activity:
+            label How is the quest called?
+                input(type='text' id='quest')
+            label Is it an outdoor activity?
+                input(type='checkbox' id='isOutdoor')
+            label Action / Chillen
+                input(type='range' min='1' max='10'  id='isSport')
+            label Personenanzahl
+                select
+                    option(value='1') 1
+                    option(value='2') 2
+                    option(value='3-5') 3-5
+                    option(value='6 und mehr') 6 und mehr
+            label Spaßfaktor
+                input(type='range' min='1' max='10'  id='isFun')
+            button(onclick='submitQuest()') Submit your Quest!
+            p(id='response')

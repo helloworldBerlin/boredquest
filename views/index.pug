@@ -1,37 +1,33 @@
 html
     head
-        title = Boredquest
+        title Boredquest
         style
             include styles/app.css
     body
-        header(class='header')
+        header.header
             h1 Boredquest
-        main(class='content')
-            h2 Langeweile?
-            label Outdoors?
-                input(type='checkbox' id='outdoor' class='toggle')
-            label Action / Chillen
-                input(type='range' min='0' max='10'  id='sport')
-            label Personenanzahl
-                select
-                    option(value='1') 1
-                    option(value='2') 2
-                    option(value='3-5') 3-5
-                    option(value='6 und mehr') 6 und mehr
-            label Spaßfaktor
-                input(type='range' min='0' max='10'  id='sport')
-            button(onclick='requestQuest()') Get quest!
+        main.content
+            h2.texthuge Langeweile?
+            button(onclick='requestQuest()').button.phat Quest bekommen!
+            button.textbutton Filter
+                include images/triangle_down.svg
+            div.filterselect
+                label Outdoors?
+                    input(type='checkbox' id='outdoor' class='toggle')
+                label Action / Chillen
+                    input(type='range' min='1' max='10'  id='sport')
+                label Personenanzahl
+                    select
+                        option(value='1') 1
+                        option(value='2') 2
+                        option(value='3-5') 3-5
+                        option(value='6 und mehr') 6 und mehr
+                label Spaßfaktor
+                    input(type='range' min='1' max='10'  id='fun')
             h1(id= "answer")
-        div(class='submitquest')
-            h2 Submit your own activity:
-            label How is the quest called?
-                input(type='text' id='quest')
-            label Is it an outdoor activity?
-                input(type='checkbox' id='isOutdoor')
-            label Is it a sporty activity?
-                input(type='range' id='isSport')
-            button(onclick='submitQuest()') Submit your Quest!
-            p(id='response')
+        div.submitquest
+            h2 Selbst gute Ideen gegen Langeweile?
+            button.button.phat Quest senden
 
     script.
         function requestQuest(){
