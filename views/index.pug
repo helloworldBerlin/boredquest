@@ -6,7 +6,7 @@ html
     p Outdoors?
       input(type='checkbox' id='outdoor')
     p Sports?
-      input(type='checkbox' id='sport')
+      input(type='range' id='sport')
     button(onclick='requestQuest()') Get quest!
     h1(id= "answer")
     p Submit your own activity:
@@ -17,7 +17,7 @@ html
       p Is it a sporty activity?
         input(type='checkbox' id='isSport')
       button(onclick='submitQuest()') Submit your Quest!
-      p(id='responce')
+      p(id='response')
 
   script.
     function requestQuest(){
@@ -41,7 +41,7 @@ html
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200){
-                document.getElementById('responce').innerHTML = this.responseText;
+                document.getElementById('response').innerHTML = this.responseText;
             }
         };
         var submitForm = {quest: document.getElementById('quest').value,
