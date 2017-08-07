@@ -21,22 +21,16 @@ router.get('/quest', function(req, res){
     })
 });
 
-//expectet questForm query:
-//  -4 hex numbers, each representing an attribut (outdoor, sport, personenZahl, spassFaktor; in that order)
-//  -for example questForm=<n1><n2><n3><n4>
+//expected query-string:
+// /getQuest?outdoor=<true/false> action=<0-10> persZahl=<'1'/ '2'/ '3-5'/ '5 oder mehr'> spassFaktor=<1-10>
 router.get('/getQuest', function(req, res){
     var db = req.db;
     var collection = db.get('quests');
-    var questForm = req.query.questForm;
-    if(questForm.length != 4) res.status(400).send('Dude wat?');
-    questForm = questForm.split("");
-    for(var i = 0; i < questForm.length; i++){
-        questForm[i] = parseInt(questForm[i], 16);
-    }
-    collection.find({'outdoor': questForm[0],
-                     'sport': questForm[1]},
-                     'personenZahl': questForm[2],
-                     'spassFaktor': questForm[3],
+    if(!inputCheck(getQuest, req)) error(400, 'Something went wrong');
+    collection.find({'outdoor': req.query.outdoor,
+                     'action': req.query.action,
+                     'personenZahl': req.query.persZahl,
+                     'spassFaktor': req.query.spassFaktor},
                      function(err, quests){
         if (err) {
             res.send('Keine Tätigkeit gefunden...');
@@ -50,22 +44,17 @@ router.get('/getQuest', function(req, res){
     });
 });
 
-//expectet submitForm Query:
-//  -a string (questName), a '-' seperating the string from 4 hex-numbers
-//  -each hex-number represents an attribut (outdoor, sport, personenZahl, spassFaktor; in that order)
-//  -for example:  submitForm=<QuestName>-<n1><n2><n3><n4>
+//expected query-string:
+// /submitQuest?quest=<string <= 40 length> outdoor=<true/false> action=<0-10> persZahl=<'1'/ '2'/ '3-5'/ '5 oder mehr'> spassFaktor=<1-10>
 router.get('/submitQuest', function(req, res){
     var db = req.db;
     var collection = db.get('quests');
-    var submitForm = req.query.submitForm;
-    submitForm = submitForm.split('-');
-    if(typeof(submitForm[0]) != 'string' && submitForm[1].length != 4) res.status(400).send('Something went wrong...');
-    var subSubmitForm = submitForm[1].split('');
-    var insertObj = {quest: submitForm[0],
-                     outdoor: parseInt(subSubmitForm[0], 16),
-                     sport: parseInt(subSubmitForm[1], 16),
-                     personenZahl: parseInt(subSubmitForm[2], 16),
-                     spassFaktor: parseInt(subSubmitForm[3], 16),
+    if(!inputCheck(submitQuest, req)) error(400, 'Something went wrong...');
+    var insertObj = {quest: req.query.quest,
+                     outdoor: req.query.outdoor,
+                     action: req.query.action,
+                     personenZahl: req.query.persZahl,
+                     spassFaktor: req.query.spassFaktor,
                      count: 0,
                      rating: 0};
     collection.insert(insertObj, function(err, result){
@@ -78,5 +67,36 @@ router.get('/submitQuest', function(req, res){
         }
     });
 });
+
+function inputCheck(type, req){
+    if(type == 'submitQuest') {
+        var quest = req.query.quest;
+        if(quest.length > 40 || quest.length < 0) return 0;
+    }
+    var outdoor = req.query.outdoor;
+    if(!(outdoor != 'true' || outdoor != 'false')) return 0;
+    var action = req.query.action;
+    if(typeof(action) != 'number' && (action > 10 || action < 0)) return 0;
+    var persZahl = req.query.persZahl;
+    switch(persZahl){
+        case '1':
+            break;
+        case '2':
+            break;
+        case '3-5':
+            break;
+        case '5 oder mehr':
+            break;
+        default:
+            return 0;
+    }
+    var spassFaktor = req.query.spassFaktor;
+    if(typeof(spassFaktor) != 'number' && (spassFaktor > 10 || spassFaktor < 0)) return 0;
+    return 1;
+}
+
+function error(errCode, msg){
+    res.status(errCode).send(msg);
+}
 
 module.exports = router;
