@@ -1,56 +1,70 @@
 html
-  head
-    title= hi
-  body
-    h1 Bored?
-    p Outdoors?
-      input(type='checkbox' id='outdoor')
-    p Sports?
-      input(type='checkbox' id='sport')
-    button(onclick='requestQuest()') Get quest!
-    h1(id= "answer")
-    p Submit your own activity:
-      p How is the quest called?
-      input(type='text' id='quest')
-      p Is it an outdoor activity?
-        input(type='checkbox' id='isOutdoor')
-      p Is it a sporty activity?
-        input(type='checkbox' id='isSport')
-      button(onclick='submitQuest()') Submit your Quest!
-      p(id='responce')
+    head
+        title = Boredquest
+        style
+            include styles/app.css
+    body
+        header(class='header')
+            h1 Boredquest
+        main(class='content')
+            h2 Langeweile?
+            label Outdoors?
+                input(type='checkbox' id='outdoor' class='toggle')
+            label Action / Chillen
+                input(type='range' min='0' max='10'  id='sport')
+            label Personenanzahl
+                select
+                    option(value='1') 1
+                    option(value='2') 2
+                    option(value='3-5') 3-5
+                    option(value='6 und mehr') 6 und mehr
+            label Spaßfaktor
+                input(type='range' min='0' max='10'  id='sport')
+            button(onclick='requestQuest()') Get quest!
+            h1(id= "answer")
+        div(class='submitquest')
+            h2 Submit your own activity:
+            label How is the quest called?
+                input(type='text' id='quest')
+            label Is it an outdoor activity?
+                input(type='checkbox' id='isOutdoor')
+            label Is it a sporty activity?
+                input(type='range' id='isSport')
+            button(onclick='submitQuest()') Submit your Quest!
+            p(id='response')
 
-  script.
-    function requestQuest(){
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("answer").innerHTML = this.responseText;
-        }
-      };
-      var outdoor = document.getElementById('outdoor').checked;
-      var sport = document.getElementById('sport').checked;
-      if(outdoor) outdoor = 1
-      else outdoor = 0;
-      if(sport) sport = 1
-      else sport = 0;
-      xhttp.open("GET", "getQuest?questForm="+outdoor+sport, true);
-      xhttp.send();
-    };
-
-    function submitQuest(){
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200){
-                document.getElementById('responce').innerHTML = this.responseText;
-            }
+    script.
+        function requestQuest(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("answer").innerHTML = this.responseText;
+                }
+            };
+            var outdoor = document.getElementById('outdoor').checked;
+            var sport = document.getElementById('sport').checked;
+            if(outdoor) outdoor = 1
+            else outdoor = 0;
+            if(sport) sport = 1
+            else sport = 0;
+            xhttp.open("GET", "getQuest?questForm="+outdoor+sport, true);
+            xhttp.send();
         };
-        var submitForm = {quest: document.getElementById('quest').value,
-                          outdoor: document.getElementById('isOutdoor').checked,
-                          sport: document.getElementById('isSport').checked};
-        var urlParam = []
-        for (var i in submitForm){
-            urlParam.push(encodeURIComponent(i) + "=" + encodeURIComponent(submitForm[i]));
-        }
-        xhttp.open("GET", "submitQuest/?" + urlParam.join("&"), true);
-        xhttp.send();
-    };
+
+        function submitQuest(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200){
+                    document.getElementById('response').innerHTML = this.responseText;
+                }
+            };
+            var submitForm = {quest: document.getElementById('quest').value,
+                outdoor: document.getElementById('isOutdoor').checked,
+                sport: document.getElementById('isSport').checked};
+            var urlParam = []
+            for (var i in submitForm){
+                urlParam.push(encodeURIComponent(i) + "=" + encodeURIComponent(submitForm[i]));
+            }
+            xhttp.open("GET", "submitQuest/?" + urlParam.join("&"), true);
+            xhttp.send();
+        };
