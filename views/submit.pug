@@ -1,0 +1,36 @@
+html
+    header
+        title = Submit your own Quest!
+        style 
+            include styles/app.class
+        
+    body
+        div(class='submitquest')
+            h2 Submit your own activity:
+            label How is the quest called?
+                input(type='text' id='quest')
+            label Is it an outdoor activity?
+                input(type='checkbox' id='isOutdoor')
+            label Is it a sporty activity?
+                input(type='range' id='isSport')
+            button(onclick='submitQuest()') Submit your Quest!
+            p(id='response')
+    
+    script.
+        function submitQuest(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200){
+                    document.getElementById('response').innerHTML = this.responseText;
+                }
+            };
+            var submitForm = {quest: document.getElementById('quest').value,
+                outdoor: document.getElementById('isOutdoor').checked,
+                sport: document.getElementById('isSport').checked};
+            var urlParam = []
+            for (var i in submitForm){
+                urlParam.push(encodeURIComponent(i) + "=" + encodeURIComponent(submitForm[i]));
+            }
+            xhttp.open("GET", "submitQuest/?" + urlParam.join("&"), true);
+            xhttp.send();
+        };

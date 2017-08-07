@@ -85,7 +85,7 @@ function inputCheck(type, req){
             break;
         case '3-5':
             break;
-        case '5 oder mehr':
+        case '6 oder mehr':
             break;
         default:
             return 0;
