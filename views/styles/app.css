@@ -64,7 +64,13 @@ button {
 
 .filterselect {
     display: none;
+
+    flex-direction: column;
+    align-items: center;
 }
+    .filterselect *:not(:first-child) {
+        margin-top: 2rem;
+    }
 
 .submitquest {
     background-color: var(--grey);

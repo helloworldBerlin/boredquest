@@ -9,7 +9,7 @@ html
         main.content
             h2.texthuge Langeweile?
             button(onclick='requestQuest()').button.phat Quest bekommen!
-            button.textbutton Filter
+            button.textbutton(onclick='toggleFilter()') Filter
                 include images/triangle_down.svg
             div.filterselect
                 label Outdoors?
@@ -30,6 +30,18 @@ html
             button.button.phat Quest senden
 
     script.
+        function toggleFilter(){
+            console.log('click');
+            element = document.querySelectorAll('div.filterselect')[0];
+            if(element.style.display == 'none') {
+                element.style.display = 'flex';
+                console.log('checked none');
+            } else {
+                console.log('checked other');
+                element.style.display = 'none';
+            }
+        }
+        
         function requestQuest(){
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
