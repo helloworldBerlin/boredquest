@@ -3,7 +3,7 @@ var express = require('express'),
     mongo = require('mongodb'),
     monk = require('monk');
 
-var db = monk('localhost:27017/db_01');
+var db = monk('mongodb://User1:user1@ds013310.mlab.com:13310/boredquest');
 
 var router = require('./router');
 

@@ -28,8 +28,8 @@ router.get('/getQuest', function(req, res){
     //Fehlerbehandlung einführen für query-string
     questForm = questForm.split("");
     for(var i = 0; i < questForm.length; i++){
-        if(questForm[i] == 1) questForm[i] = true;
-        else questForm[i] = false;
+        if(questForm[i] == 1) questForm[i] = "true";
+        else questForm[i] = "false";
     }
     collection.find({'outdoor': questForm[0], 'sport': questForm[1]}, function(err, quests){
         if (err) {
