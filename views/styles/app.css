@@ -18,6 +18,13 @@ html, body {
     letter-spacing: 0.8;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
 button {
     border: none;
     background-color: transparent;
@@ -63,16 +70,31 @@ button {
         }
 
 .filterselect {
-    display: none;
+    /*display: none;*/
 
     flex-direction: column;
     align-items: center;
 }
+
     .filterselect *:not(:first-child) {
         margin-top: 2rem;
     }
 
 .submitquest {
-    background-color: var(--grey);
+    position: relative;
     color: white;
+    width: 100%;
+    text-align: right;
 }
+
+    .submitquest svg {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: -1;    
+    }
+
+    .submitquest h2 {
+        display: inline;
+        margin-right: 2rem;
+    }
