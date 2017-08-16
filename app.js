@@ -21,6 +21,7 @@ app.use('/', router);
 app.use('/submit', router);
 app.use('/getQuest', router);
 app.use('/submitQuest', router);
+
 app.use(function(err, req, res, next){
     res.status(400).send('Something went wrong...');
 });
