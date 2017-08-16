@@ -11,7 +11,7 @@ router.get('/', function(req, res){
 router.get('/getQuest', function(req, res){
     var db = req.db;
     var collection = db.get('quests');
-    if(!inputCheck('getQuest', req)) error(res, 400, 'Something went wrong');
+    if(!inputCheck('getQuest', req)) next('error');
     collection.find({'outdoor': req.query.outdoor,
                      'action': req.query.action,
                      'personenZahl': req.query.persZahl,
@@ -38,7 +38,7 @@ router.get('/submit', function(req, res){
 router.get('/submitQuest', function(req, res){
     var db = req.db;
     var collection = db.get('quests');
-    if(!inputCheck('submitQuest', req)) error(res, 400, 'Something went wrong...');
+    if(!inputCheck('submitQuest', req)) next('error');
     var insertObj = {quest: req.query.quest,
                      outdoor: req.query.outdoor,
                      action: req.query.action,
@@ -83,10 +83,6 @@ function inputCheck(type, req){
     var spassFaktor = req.query.spassFaktor;
     if(typeof(spassFaktor) != 'number' && (spassFaktor > 10 || spassFaktor < 0)) return 0;
     return 1;
-}
-
-function error(res, errCode, msg){
-    res.status(errCode).send(msg);
 }
 
 module.exports = router;
