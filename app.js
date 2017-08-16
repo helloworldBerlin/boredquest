@@ -18,7 +18,7 @@ app.use(function(req, res, next){
 })
 
 app.use('/', router);
-app.use('/quest', router);
+app.use('/submit', router);
 app.use('/getQuest', router);
 app.use('/submitQuest', router);
 

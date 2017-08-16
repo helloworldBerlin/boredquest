@@ -9,18 +9,18 @@ html
                 input(type='text' id='quest')
             label Is it an outdoor activity?
                 input(type='checkbox' id='outdoor')
-                    label Action / Chillen
-                        input(type='range' min='1' max='10'  id='action')
-                    label Personenanzahl
-                        select (id='persZahl')
-                            option(value='1') 1
-                            option(value='2') 2
-                            option(value='3-5') 3-5
-                            option(value='6 und mehr') 6 und mehr
-                    label Spaßfaktor
-                        input(type='range' min='1' max='10'  id='fun')
-                    button(onclick='submitQuest()') Submit your Quest!
-                    p(id='response')
+            label Action / Chillen
+                input(type='range' min='1' max='10'  id='action')
+            label Personenanzahl
+                select#persZahl
+                    option(value='1') 1
+                    option(value='2') 2
+                    option(value='3-5') 3-5
+                    option(value='6 und mehr') 6 und mehr
+            label Spaßfaktor
+                input(type='range' min='1' max='10'  id='fun')
+            button(onclick='submitQuest()') Submit your Quest!
+            p(id='response')
                         
                         
     script.
@@ -33,10 +33,11 @@ html
             };
             var e = document.getElementById('persZahl');
             var submitForm = {
-                outdoor = document.getElementById('outdoor').checked,
-                action = document.getElementById('sport').value,
-                persZahl = e.options[e.selectedIndex].text,
-                spassFaktor = document.getElementById('fun').value
+                quest: document.getElementById('quest').value,
+                outdoor: document.getElementById('outdoor').checked,
+                action: document.getElementById('action').value,
+                persZahl: e.options[e.selectedIndex].text,
+                spassFaktor: document.getElementById('fun').value
             };
             var urlParam = []
             for (var i in submitForm){

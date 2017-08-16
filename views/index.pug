@@ -17,7 +17,7 @@ html
                 label Action / Chillen
                     input(type='range' min='1' max='10'  id='action')
                 label Personenanzahl
-                    select (id='persZahl')
+                    select#persZahl
                         option(value='1') 1
                         option(value='2') 2
                         option(value='3-5') 3-5
@@ -39,15 +39,15 @@ html
             };
             var e = document.getElementById('persZahl');
             var submitForm = {
-                outdoor = document.getElementById('outdoor').checked,
-                action = document.getElementById('sport').value,
-                persZahl = e.options[e.selectedIndex].text,
-                spassFaktor = document.getElementById('fun').value
+                outdoor: document.getElementById('outdoor').checked,
+                action: document.getElementById('action').value,
+                persZahl: e.options[e.selectedIndex].text,
+                spassFaktor: document.getElementById('fun').value
             };
             var urlParam = []
             for (var i in submitForm){
                 urlParam.push(encodeURIComponent(i) + "=" + encodeURIComponent(submitForm[i]));
             }
-            xhttp.open("GET", "submitQuest/?" + urlParam.join("&"), true);
+            xhttp.open("GET", "getQuest/?" + urlParam.join("&"), true);
             xhttp.send();
         };

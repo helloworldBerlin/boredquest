@@ -6,27 +6,12 @@ router.get('/', function(req, res){
     res.render('index');
 });
 
-router.get('/quest', function(req, res){
-    var db = req.db;
-    var collection = db.get('quests');
-    collection.find({}, function(err, quests){
-        if (err) {
-            res.send('much error');
-        }
-        else {
-            res.render('quest', {
-                'questlist': quests
-            });
-        }
-    })
-});
-
 //expected query-string:
 // /getQuest?outdoor=<true/false> action=<0-10> persZahl=<'1'/ '2'/ '3-5'/ '5 oder mehr'> spassFaktor=<1-10>
 router.get('/getQuest', function(req, res){
     var db = req.db;
     var collection = db.get('quests');
-    if(!inputCheck(getQuest, req)) error(400, 'Something went wrong');
+    if(!inputCheck('getQuest', req)) error(res, 400, 'Something went wrong');
     collection.find({'outdoor': req.query.outdoor,
                      'action': req.query.action,
                      'personenZahl': req.query.persZahl,
@@ -44,12 +29,16 @@ router.get('/getQuest', function(req, res){
     });
 });
 
+router.get('/submit', function(req, res){
+    res.render('submit');
+});
+
 //expected query-string:
 // /submitQuest?quest=<string <= 40 length> outdoor=<true/false> action=<0-10> persZahl=<'1'/ '2'/ '3-5'/ '5 oder mehr'> spassFaktor=<1-10>
 router.get('/submitQuest', function(req, res){
     var db = req.db;
     var collection = db.get('quests');
-    if(!inputCheck(submitQuest, req)) error(400, 'Something went wrong...');
+    if(!inputCheck('submitQuest', req)) error(res, 400, 'Something went wrong...');
     var insertObj = {quest: req.query.quest,
                      outdoor: req.query.outdoor,
                      action: req.query.action,
@@ -71,10 +60,11 @@ router.get('/submitQuest', function(req, res){
 function inputCheck(type, req){
     if(type == 'submitQuest') {
         var quest = req.query.quest;
+        console.log(quest);
         if(quest.length > 40 || quest.length < 0) return 0;
     }
     var outdoor = req.query.outdoor;
-    if(!(outdoor != 'true' || outdoor != 'false')) return 0;
+    if(!(outdoor == 'true' || outdoor == 'false')) return 0;
     var action = req.query.action;
     if(typeof(action) != 'number' && (action > 10 || action < 0)) return 0;
     var persZahl = req.query.persZahl;
@@ -95,7 +85,7 @@ function inputCheck(type, req){
     return 1;
 }
 
-function error(errCode, msg){
+function error(res, errCode, msg){
     res.status(errCode).send(msg);
 }
 
